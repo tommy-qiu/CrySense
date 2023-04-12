@@ -1,0 +1,6 @@
+camellia.c:303:13:camellia_feistel	1
+camellia.c:328:6:mbedtls_camellia_init	1
+camellia.c:334:6:mbedtls_camellia_free	2
+camellia.c:345:5:mbedtls_camellia_setkey_enc	34
+camellia.c:454:5:mbedtls_camellia_setkey_dec	3
+camellia.c:505:5:mbedtls_camellia_crypt_ecb	3
