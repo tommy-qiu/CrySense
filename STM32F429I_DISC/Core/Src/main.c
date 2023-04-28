@@ -181,22 +181,7 @@ int main(void)
 	  }
 
 
-	/*
-	if(data_ready == 1){
-		printf("here\n\r");
 
-		HAL_GPIO_WritePin(LD3_GPIO_Port,LD3_Pin,GPIO_PIN_SET);
-		HAL_Delay(1000);
-		HAL_GPIO_WritePin(LD3_GPIO_Port,LD3_Pin,GPIO_PIN_RESET);
-
-		for(int i = 0;i<BUFFER_SIZE;i++){
-			printf("%f\n",audio_buffer[i]);
-		}
-		data_ready = 0;
-
-		HAL_I2S_Receive_DMA(&hi2s3, (uint16_t *)audio_buffer, BUFFER_SIZE);
-	}
-*/
 
   }
   /* USER CODE END 3 */
