@@ -42,7 +42,7 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-#define BUFFER_SIZE 4096
+#define BUFFER_SIZE 400
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -60,7 +60,7 @@ SDRAM_HandleTypeDef hsdram1;
 osThreadId defaultTaskHandle;
 /* USER CODE BEGIN PV */
 uint8_t data_ready = 0;
-uint32_t audio_buffer[BUFFER_SIZE];
+uint16_t audio_buffer[BUFFER_SIZE];
 
 /* USER CODE END PV */
 
@@ -88,10 +88,11 @@ PUTCHAR_PROTOTYPE
 }
 
 
-void HAL_I2S_RxCpltCallback(I2S_HandleTypeDef *hi2s){
+void XferCpltCallback(I2S_HandleTypeDef *hi2s){
 	//printf("HERE CALLBACK\n\r");
+
 	data_ready = 1;
-	HAL_NVIC_ClearPendingIRQ(DMA1_Stream0_IRQn);
+	//HAL_NVIC_ClearPendingIRQ(DMA1_Stream0_IRQn);
 }
 /* USER CODE END 0 */
 
@@ -130,7 +131,8 @@ int main(void)
   MX_USART1_UART_Init();
   MX_I2S3_Init();
   /* USER CODE BEGIN 2 */
-  HAL_I2S_Receive_DMA(&hi2s3, (uint16_t *) audio_buffer, BUFFER_SIZE);
+  //hdma_spi3_rx.XferCpltCallback = &XferCpltCallback;
+  //HAL_I2S_Receive_DMA(&hi2s3, (uint16_t *) audio_buffer, BUFFER_SIZE);
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -168,15 +170,33 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+
+	  if (HAL_I2S_Receive(&hi2s3,(uint16_t *) audio_buffer,BUFFER_SIZE,100)!= HAL_OK){
+		  printf("HAL_I2S_Receive Failed\n\r");
+	  }
+
+	  for(int i=0;i<BUFFER_SIZE;i++){
+		  printf("%u\n",audio_buffer[i]);
+
+	  }
+
+
+	/*
 	if(data_ready == 1){
 		printf("here\n\r");
+
+		HAL_GPIO_WritePin(LD3_GPIO_Port,LD3_Pin,GPIO_PIN_SET);
+		HAL_Delay(1000);
+		HAL_GPIO_WritePin(LD3_GPIO_Port,LD3_Pin,GPIO_PIN_RESET);
+
 		for(int i = 0;i<BUFFER_SIZE;i++){
 			printf("%f\n",audio_buffer[i]);
 		}
 		data_ready = 0;
+
 		HAL_I2S_Receive_DMA(&hi2s3, (uint16_t *)audio_buffer, BUFFER_SIZE);
 	}
-
+*/
 
   }
   /* USER CODE END 3 */
@@ -271,9 +291,9 @@ static void MX_I2S3_Init(void)
   hi2s3.Instance = SPI3;
   hi2s3.Init.Mode = I2S_MODE_MASTER_RX;
   hi2s3.Init.Standard = I2S_STANDARD_PHILIPS;
-  hi2s3.Init.DataFormat = I2S_DATAFORMAT_24B;
+  hi2s3.Init.DataFormat = I2S_DATAFORMAT_16B;
   hi2s3.Init.MCLKOutput = I2S_MCLKOUTPUT_DISABLE;
-  hi2s3.Init.AudioFreq = I2S_AUDIOFREQ_48K;
+  hi2s3.Init.AudioFreq = I2S_AUDIOFREQ_44K;
   hi2s3.Init.CPOL = I2S_CPOL_LOW;
   hi2s3.Init.ClockSource = I2S_CLOCK_PLL;
   hi2s3.Init.FullDuplexMode = I2S_FULLDUPLEXMODE_DISABLE;
@@ -350,7 +370,7 @@ static void MX_USART1_UART_Init(void)
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
   huart1.Init.BaudRate = 115200;
-  huart1.Init.WordLength = UART_WORDLENGTH_8B;
+  huart1.Init.WordLength = UART_WORDLENGTH_9B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_EVEN;
   huart1.Init.Mode = UART_MODE_TX_RX;

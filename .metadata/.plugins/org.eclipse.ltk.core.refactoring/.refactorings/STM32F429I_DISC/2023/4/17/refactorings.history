@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;STM32F429I_DISC/CrySenseF429.ioc&apos; to &apos;STM32F429I_DISC.ioc&apos;" description="Rename resource &apos;CrySenseF429.ioc&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="CrySenseF429.ioc" name="STM32F429I_DISC.ioc" stamp="1682687635501" updateReferences="true"/>
+</session>

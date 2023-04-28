@@ -1,0 +1,17 @@
+16:14:16 **** Incremental Build of configuration Debug for project STM32F429I_DISC ****
+make -j24 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../USB_HOST/App -I../USB_HOST/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Host_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Host_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "STM32F429I_DISC.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\andy\Desktop\CrySense\CrySense\STM32F429I_DISC\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32F429I_DISC.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM32F429I_DISC.elf
+ 
+arm-none-eabi-size   STM32F429I_DISC.elf 
+arm-none-eabi-objdump -h -S  STM32F429I_DISC.elf  > "STM32F429I_DISC.list"
+   text	   data	    bss	    dec	    hex	filename
+  53464	    492	   3844	  57800	   e1c8	STM32F429I_DISC.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM32F429I_DISC.list
+ 
+
+16:14:17 Build Finished. 0 errors, 0 warnings. (took 589ms)
+
